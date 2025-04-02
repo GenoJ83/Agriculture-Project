@@ -106,7 +106,7 @@ GRANT farmer_role TO 'farmer'@'localhost';
 GRANT supplier_role TO 'supplier'@'localhost';
 GRANT buyer_role TO 'buyer'@'localhost';
 
--- Set Default Role for Users
+-- Setting Default Role for Users
 SET DEFAULT ROLE farmer_role FOR 'farmer'@'localhost';
 SET DEFAULT ROLE supplier_role FOR 'supplier'@'localhost';
 SET DEFAULT ROLE buyer_role FOR 'buyer'@'localhost';
