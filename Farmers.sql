@@ -297,7 +297,7 @@ FROM Buyers b
 LEFT JOIN Orders o ON b.BuyerID = o.BuyerID
 GROUP BY b.BuyerID, b.Name, b.Location;
 
--- Insert Farmers (10 entries)
+-- Inserting Farmers (10 entries)
 INSERT INTO Farmers (Name, Contact, Location) VALUES
 ('James Kivumbi', 'james.kivumbi@ug.farm', 'Kampala, Central Region'),
 ('Grace Namazzi', 'grace.namazzi@ug.farm', 'Jinja, Eastern Region'),
