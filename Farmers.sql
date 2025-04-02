@@ -362,7 +362,7 @@ INSERT INTO Orders (ProductID, BuyerID, Quantity, OrderDate, Status, PaymentStat
 (9, 9, 150, '2025-03-22', 'Pending', 'Pending'),
 (10, 10, 90, '2025-03-25', 'Delivered', 'Paid');
 
--- Insert Transportation (with updated dates)
+-- Inserting Transportation
 INSERT INTO Transportation (OrderID, VehicleType, DriverName, ExpectedDelivery, ActualDelivery, Status) VALUES
 (1, 'Pickup Truck', 'Joseph Ssebugwawo', '2025-03-10', '2025-03-10', 'Delivered'),
 (2, 'Container Truck', 'Aisha Nakato', '2025-03-16', NULL, 'In Transit'),
