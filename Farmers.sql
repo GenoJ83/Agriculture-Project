@@ -375,7 +375,7 @@ INSERT INTO Transportation (OrderID, VehicleType, DriverName, ExpectedDelivery, 
 (9, 'Refrigerated Truck', 'Susan Nambi', '2025-03-28', '2025-03-28', 'Delivered'),
 (10, 'Pickup Truck', 'George Wabwire', '2025-04-01', NULL, 'In Transit');
 
--- Add Indexes for Performance
+-- Adding Indexes for Performance
 CREATE INDEX idx_products_farmer ON Products(FarmerID);
 CREATE INDEX idx_orders_product ON Orders(ProductID);
 CREATE INDEX idx_orders_buyer ON Orders(BuyerID);
