@@ -256,7 +256,7 @@ END;
 
 DELIMITER ;
 
--- Create Views
+-- Creating Views
 CREATE VIEW FarmerProductOverview AS
 SELECT f.FarmerID, f.Name AS FarmerName, f.Location, p.Name AS ProductName, p.Quantity, p.PricePerKg, p.QualityRating
 FROM Farmers f
