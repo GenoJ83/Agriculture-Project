@@ -310,7 +310,7 @@ INSERT INTO Farmers (Name, Contact, Location) VALUES
 ('Isaac Muwanga', 'isaac.muwanga@ug.farm', 'Arua, Northern Region'),
 ('Jane Nakato', 'jane.nakato@ug.farm', 'Hoima, Western Region');
 
--- Insert Suppliers (10 entries)
+-- Inserting Suppliers (10 entries)
 INSERT INTO Suppliers (Name, Contact, Location) VALUES
 ('Uganda Agro Traders', 'sales@ugandagro.com', 'Kampala, Central Region'),
 ('Eastern Fresh Supplies', 'info@easternfresh.ug', 'Mbale, Eastern Region'),
