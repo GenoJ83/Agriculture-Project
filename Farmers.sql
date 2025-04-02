@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Suppliers (
     Location VARCHAR(100) NOT NULL CHECK (Location != '') -- Simplified check for non-empty location
 );
 
--- Create Buyers Table with Constraints (No dependencies yet)
+-- Create Buyers Table with Constraints 
 CREATE TABLE IF NOT EXISTS Buyers (
     BuyerID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE, -- Ensure unique buyer names
