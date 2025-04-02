@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS Transportation (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE
 );
 
--- Re-enable foreign key checks
+-- Re-enabling foreign key checks
 SET FOREIGN_KEY_CHECKS=1;
 
 -- Creating AuditLog table
