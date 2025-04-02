@@ -111,7 +111,7 @@ SET DEFAULT ROLE farmer_role FOR 'farmer'@'localhost';
 SET DEFAULT ROLE supplier_role FOR 'supplier'@'localhost';
 SET DEFAULT ROLE buyer_role FOR 'buyer'@'localhost';
 
--- Enhance Security
+-- Enhancing Security
 ALTER USER 'farmer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'farmerpass';
 ALTER USER 'supplier'@'localhost' IDENTIFIED WITH mysql_native_password BY 'supplierpass';
 ALTER USER 'buyer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'buyerpass';
