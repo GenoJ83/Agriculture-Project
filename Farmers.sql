@@ -116,10 +116,10 @@ ALTER USER 'farmer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'farmer
 ALTER USER 'supplier'@'localhost' IDENTIFIED WITH mysql_native_password BY 'supplierpass';
 ALTER USER 'buyer'@'localhost' IDENTIFIED WITH mysql_native_password BY 'buyerpass';
 
--- Create Triggers
+-- Creating Triggers
 DELIMITER //
 
--- Replace check constraint for ExpiryDate >= HarvestDate with trigger
+-- Replacing check constraint for ExpiryDate >= HarvestDate with trigger
 CREATE TRIGGER validate_product_dates
 BEFORE INSERT ON Products
 FOR EACH ROW
