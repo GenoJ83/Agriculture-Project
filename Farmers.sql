@@ -212,7 +212,7 @@ BEGIN
 END;
 //
 
--- Validate ActualDelivery date if provided (NEW)
+-- Validating ActualDelivery date if provided (NEW)
 CREATE TRIGGER validate_delivery_dates
 BEFORE INSERT ON Transportation
 FOR EACH ROW
@@ -226,7 +226,7 @@ END;
 
 DELIMITER ;
 
--- Create Stored Procedures
+-- Creating Stored Procedures
 DELIMITER //
 
 CREATE PROCEDURE GetProductAvailability(IN prodID INT)
