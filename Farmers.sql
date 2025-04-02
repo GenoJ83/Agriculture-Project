@@ -142,7 +142,7 @@ BEGIN
 END;
 //
 
--- Replace check constraint for OrderDate <= CURDATE() with trigger
+-- Replacing check constraint for OrderDate <= CURDATE() with trigger
 CREATE TRIGGER validate_order_date
 BEFORE INSERT ON Orders
 FOR EACH ROW
@@ -165,7 +165,7 @@ BEGIN
 END;
 //
 
--- Calculate TotalAmount when inserting orders (NEW)
+-- Calculating TotalAmount when inserting orders (NEW)
 CREATE TRIGGER before_order_insert
 BEFORE INSERT ON Orders
 FOR EACH ROW
