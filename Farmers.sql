@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     ProductID INT,
     BuyerID INT,
     Quantity INT CHECK (Quantity > 0),
-    OrderDate DATE NOT NULL, -- Removed CURDATE() check constraint
+    OrderDate DATE NOT NULL, 
     Status ENUM('Pending', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
     TotalAmount DECIMAL(10,2),
     PaymentStatus ENUM('Pending', 'Paid', 'Overdue') DEFAULT 'Pending',
