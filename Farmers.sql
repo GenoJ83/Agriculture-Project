@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Farmers (
     Location VARCHAR(100) NOT NULL CHECK (Location != '') -- Simplified check for non-empty location
 );
 
--- Create Suppliers Table with Constraints (No dependencies on other tables yet)
+-- Create Suppliers Table with Constraints 
 CREATE TABLE IF NOT EXISTS Suppliers (
     SupplierID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE, -- Ensure unique supplier names
