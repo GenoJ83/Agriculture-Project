@@ -349,7 +349,7 @@ INSERT INTO Products (Name, Quantity, HarvestDate, ExpiryDate, PricePerKg, Farme
 ('Pineapples', 700, '2025-03-01', '2025-04-15', 2.00, 9, 9, 'Excellent', 'Organic'),
 ('Soya Beans', 450, '2025-02-15', '2025-06-15', 1.80, 10, 10, 'Good', NULL);
 
--- Insert Orders (with TotalAmount calculated by trigger)
+-- Inserting Orders
 INSERT INTO Orders (ProductID, BuyerID, Quantity, OrderDate, Status, PaymentStatus) VALUES
 (1, 1, 200, '2025-03-05', 'Shipped', 'Paid'),
 (2, 3, 150, '2025-03-10', 'Pending', 'Pending'),
