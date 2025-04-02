@@ -336,7 +336,7 @@ INSERT INTO Buyers (Name, Contact, Location) VALUES
 ('Hoima Co-op Ltd.', 'buying@hoimacoop.ug', 'Hoima, Western Region'),
 ('Entebbe Exports', 'sales@entebbeexports.ug', 'Entebbe, Central Region');
 
--- Insert Products (10 entries with updated dates)
+-- Inserting Products (10 entries with updated dates)
 INSERT INTO Products (Name, Quantity, HarvestDate, ExpiryDate, PricePerKg, FarmerID, SupplierID, QualityRating, Certification) VALUES
 ('Matoke (Bananas)', 1000, '2025-02-10', '2025-05-10', 1.50, 1, 1, 'Excellent', 'Organic'),
 ('Robusta Coffee', 600, '2025-01-01', '2025-07-01', 4.00, 2, 2, 'Good', 'Fair Trade'),
