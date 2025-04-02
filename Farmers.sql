@@ -91,7 +91,7 @@ CREATE ROLE IF NOT EXISTS farmer_role;
 CREATE ROLE IF NOT EXISTS supplier_role;
 CREATE ROLE IF NOT EXISTS buyer_role;
 
--- Grant Privileges to Roles
+-- Granting Privileges to Roles
 GRANT SELECT, INSERT, UPDATE ON Products TO farmer_role;
 GRANT SELECT, INSERT, UPDATE ON Orders TO buyer_role;
 GRANT SELECT ON Transportation TO supplier_role;
