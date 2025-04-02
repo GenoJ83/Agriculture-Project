@@ -246,7 +246,7 @@ BEGIN
 END;
 //
 
--- Safer backup procedure that creates a backup statement for DBA to run
+-- backup procedure that creates a backup statement for DBA to run
 CREATE PROCEDURE GenerateBackupScript()
 BEGIN
     SELECT CONCAT('mysqldump -u [username] -p AgricultureSupplyChain > /backups/agriculture_backup_', 
