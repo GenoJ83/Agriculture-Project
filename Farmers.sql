@@ -190,7 +190,7 @@ BEGIN
 END;
 //
 
--- Prevent negative quantity
+-- Preventing negative quantity
 CREATE TRIGGER prevent_negative_quantity
 BEFORE UPDATE ON Products
 FOR EACH ROW
