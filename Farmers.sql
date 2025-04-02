@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Transportation (
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS=1;
 
--- Create AuditLog table
+-- Creating AuditLog table
 CREATE TABLE IF NOT EXISTS AuditLog (
     LogID INT AUTO_INCREMENT PRIMARY KEY,
     TableName VARCHAR(50),
