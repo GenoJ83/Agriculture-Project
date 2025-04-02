@@ -96,7 +96,7 @@ GRANT SELECT, INSERT, UPDATE ON Products TO farmer_role;
 GRANT SELECT, INSERT, UPDATE ON Orders TO buyer_role;
 GRANT SELECT ON Transportation TO supplier_role;
 
--- Create Users
+-- Creating Users
 CREATE USER IF NOT EXISTS 'farmer'@'localhost' IDENTIFIED BY 'farmerpass';
 CREATE USER IF NOT EXISTS 'supplier'@'localhost' IDENTIFIED BY 'supplierpass';
 CREATE USER IF NOT EXISTS 'buyer'@'localhost' IDENTIFIED BY 'buyerpass';
