@@ -323,7 +323,7 @@ INSERT INTO Suppliers (Name, Contact, Location) VALUES
 ('Western Logistics Ltd.', 'info@westernlogistics.ug', 'Hoima, Western Region'),
 ('Central Agro Services', 'support@centralagro.ug', 'Kampala, Central Region');
 
--- Insert Buyers (10 entries)
+-- Inserting Buyers (10 entries)
 INSERT INTO Buyers (Name, Contact, Location) VALUES
 ('Kampala Market Ltd.', 'purchasing@kampalamarket.ug', 'Kampala, Central Region'),
 ('Jinja Co-operative', 'orders@jinjacoop.ug', 'Jinja, Eastern Region'),
