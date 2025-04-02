@@ -101,7 +101,7 @@ CREATE USER IF NOT EXISTS 'farmer'@'localhost' IDENTIFIED BY 'farmerpass';
 CREATE USER IF NOT EXISTS 'supplier'@'localhost' IDENTIFIED BY 'supplierpass';
 CREATE USER IF NOT EXISTS 'buyer'@'localhost' IDENTIFIED BY 'buyerpass';
 
--- Assign Roles to Users
+-- Assigning Roles to Users
 GRANT farmer_role TO 'farmer'@'localhost';
 GRANT supplier_role TO 'supplier'@'localhost';
 GRANT buyer_role TO 'buyer'@'localhost';
