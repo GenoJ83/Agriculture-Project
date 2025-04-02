@@ -180,7 +180,7 @@ BEGIN
 END;
 //
 
--- Update product quantity after order
+-- Updating product quantity after order
 CREATE TRIGGER update_product_quantity
 AFTER INSERT ON Orders
 FOR EACH ROW
