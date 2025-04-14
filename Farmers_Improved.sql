@@ -1,4 +1,4 @@
--- Drop existing database if it exists
+-- Agriculture Supply Chain Database 
 DROP DATABASE IF EXISTS AgricultureSupplyChain;
 CREATE DATABASE AgricultureSupplyChain;
 USE AgricultureSupplyChain;
@@ -27,10 +27,8 @@ CREATE TABLE IF NOT EXISTS UserLogins (
     UserID INT NOT NULL,
     UserType ENUM('Farmer', 'Supplier', 'Buyer') NOT NULL,
     LoginTime DATETIME DEFAULT CURRENT_TIMESTAMP,
-    IPAddress VARCHAR(45),
     Status ENUM('Success', 'Failed') NOT NULL,
-    DeviceInfo VARCHAR(255),
-    CONSTRAINT chk_valid_ip CHECK (IPAddress REGEXP '^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$')
+    DeviceInfo VARCHAR(255)
 );
 
 -- Create Farmers Table with Enhanced Constraints
@@ -124,8 +122,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE,
     FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID) ON DELETE CASCADE,
     FOREIGN KEY (PaymentMethodID) REFERENCES PaymentMethods(PaymentMethodID),
-    CONSTRAINT chk_positive_quantity CHECK (Quantity > 0),
-    CONSTRAINT chk_valid_order_date CHECK (OrderDate <= CURDATE())
+    CONSTRAINT chk_positive_quantity CHECK (Quantity > 0)
 );
 
 -- Create Transportation Table with Enhanced Constraints
@@ -154,9 +151,7 @@ CREATE TABLE IF NOT EXISTS AuditLog (
     User VARCHAR(50) NOT NULL,
     OldValue JSON,
     NewValue JSON,
-    IPAddress VARCHAR(45),
-    ChangeDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT chk_valid_ip CHECK (IPAddress REGEXP '^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$')
+    ChangeDate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create Indexes for Performance
@@ -259,11 +254,10 @@ CREATE TRIGGER audit_product_changes
 AFTER UPDATE ON Products
 FOR EACH ROW
 BEGIN
-    INSERT INTO AuditLog (TableName, Action, User, OldValue, NewValue, IPAddress)
+    INSERT INTO AuditLog (TableName, Action, User, OldValue, NewValue)
     VALUES ('Products', 'UPDATE', CURRENT_USER(),
             JSON_OBJECT('ProductID', OLD.ProductID, 'Price', OLD.PricePerKg, 'Quantity', OLD.Quantity),
-            JSON_OBJECT('ProductID', NEW.ProductID, 'Price', NEW.PricePerKg, 'Quantity', NEW.Quantity),
-            SUBSTRING_INDEX(USER(), '@', 1));
+            JSON_OBJECT('ProductID', NEW.ProductID, 'Price', NEW.PricePerKg, 'Quantity', NEW.Quantity));
 END //
 
 -- Failed Login Tracking
@@ -272,8 +266,29 @@ AFTER INSERT ON UserLogins
 FOR EACH ROW
 BEGIN
     IF NEW.Status = 'Failed' THEN
-        INSERT INTO AuditLog (TableName, Action, User, IPAddress)
-        VALUES ('UserLogins', 'Failed Login', CONCAT(NEW.UserType, ' ID: ', NEW.UserID), NEW.IPAddress);
+        INSERT INTO AuditLog (TableName, Action, User)
+        VALUES ('UserLogins', 'Failed Login', CONCAT(NEW.UserType, ' ID: ', NEW.UserID));
+    END IF;
+END //
+
+-- Order Date Validation
+CREATE TRIGGER validate_order_date
+BEFORE INSERT ON Orders
+FOR EACH ROW
+BEGIN
+    IF NEW.OrderDate > CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Order date cannot be in the future';
+    END IF;
+END //
+
+CREATE TRIGGER validate_order_date_update
+BEFORE UPDATE ON Orders
+FOR EACH ROW
+BEGIN
+    IF NEW.OrderDate > CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Order date cannot be in the future';
     END IF;
 END //
 
@@ -411,4 +426,82 @@ INSERT INTO PaymentMethods (Name, Description) VALUES
 ('Credit Card', 'Payment via credit card'),
 ('Cheque', 'Payment by cheque');
 
--- Rest of the sample data remains the same...
+-- Insert Farmers with enhanced data
+INSERT INTO Farmers (Name, Contact, Location, Email, Phone, RegistrationDate) VALUES
+('James Kivumbi', 'james.kivumbi@ug.farm', 'Kampala, Central Region', 'james.kivumbi@ug.farm', '256701234567', '2024-01-01'),
+('Grace Namazzi', 'grace.namazzi@ug.farm', 'Jinja, Eastern Region', 'grace.namazzi@ug.farm', '256702345678', '2024-01-02'),
+('Peter Mugisa', 'peter.mugisa@ug.farm', 'Mbarara, Western Region', 'peter.mugisa@ug.farm', '256703456789', '2024-01-03'),
+('Sarah Nambooze', 'sarah.nambooze@ug.farm', 'Lira, Northern Region', 'sarah.nambooze@ug.farm', '256704567890', '2024-01-04'),
+('Moses Byaruhanga', 'moses.byaruhanga@ug.farm', 'Gulu, Northern Region', 'moses.byaruhanga@ug.farm', '256705678901', '2024-01-05'),
+('Esther Nakimuli', 'esther.nakimuli@ug.farm', 'Masaka, Central Region', 'esther.nakimuli@ug.farm', '256706789012', '2024-01-06'),
+('Samuel Tumwine', 'samuel.tumwine@ug.farm', 'Kabale, Western Region', 'samuel.tumwine@ug.farm', '256707890123', '2024-01-07'),
+('Ruth Katusiime', 'ruth.katusiime@ug.farm', 'Soroti, Eastern Region', 'ruth.katusiime@ug.farm', '256708901234', '2024-01-08'),
+('Isaac Muwanga', 'isaac.muwanga@ug.farm', 'Arua, Northern Region', 'isaac.muwanga@ug.farm', '256709012345', '2024-01-09'),
+('Jane Nakato', 'jane.nakato@ug.farm', 'Hoima, Western Region', 'jane.nakato@ug.farm', '256700123456', '2024-01-10');
+
+-- Insert Suppliers with enhanced data
+INSERT INTO Suppliers (Name, Contact, Location, Email, Phone, RegistrationDate) VALUES
+('Uganda Agro Traders', 'sales@ugandagro.com', 'Kampala, Central Region', 'sales@ugandagro.com', '256711234567', '2024-01-01'),
+('Eastern Fresh Supplies', 'info@easternfresh.ug', 'Mbale, Eastern Region', 'info@easternfresh.ug', '256712345678', '2024-01-02'),
+('Western Farm Logistics', 'contact@westernfarm.ug', 'Fort Portal, Western Region', 'contact@westernfarm.ug', '256713456789', '2024-01-03'),
+('Northern Agri Solutions', 'info@northernagri.ug', 'Lira, Northern Region', 'info@northernagri.ug', '256714567890', '2024-01-04'),
+('Central Harvest Co.', 'sales@centralharvest.ug', 'Masaka, Central Region', 'sales@centralharvest.ug', '256715678901', '2024-01-05'),
+('Southern Traders Ltd.', 'contact@southerntraders.ug', 'Mbarara, Western Region', 'contact@southerntraders.ug', '256716789012', '2024-01-06'),
+('Eastern Agri Hub', 'contact@easternagri.ug', 'Soroti, Eastern Region', 'contact@easternagri.ug', '256717890123', '2024-01-07'),
+('Northern Supply Co.', 'sales@northernsupply.ug', 'Arua, Northern Region', 'sales@northernsupply.ug', '256718901234', '2024-01-08'),
+('Western Logistics Ltd.', 'info@westernlogistics.ug', 'Hoima, Western Region', 'info@westernlogistics.ug', '256719012345', '2024-01-09'),
+('Central Agro Services', 'support@centralagro.ug', 'Kampala, Central Region', 'support@centralagro.ug', '256710123456', '2024-01-10');
+
+-- Insert Buyers with enhanced data
+INSERT INTO Buyers (Name, Contact, Location, Email, Phone, RegistrationDate) VALUES
+('Kampala Market Ltd.', 'purchasing@kampalamarket.ug', 'Kampala, Central Region', 'purchasing@kampalamarket.ug', '256721234567', '2024-01-01'),
+('Jinja Co-operative', 'orders@jinjacoop.ug', 'Jinja, Eastern Region', 'orders@jinjacoop.ug', '256722345678', '2024-01-02'),
+('Export Uganda Ltd.', 'buying@exportuganda.com', 'Entebbe, Central Region', 'buying@exportuganda.com', '256723456789', '2024-01-03'),
+('Lira Fresh Market', 'purchasing@lirafresh.ug', 'Lira, Northern Region', 'purchasing@lirafresh.ug', '256724567890', '2024-01-04'),
+('Masaka Traders', 'orders@masakatraders.ug', 'Masaka, Central Region', 'orders@masakatraders.ug', '256725678901', '2024-01-05'),
+('Kabale Co-op', 'buying@kabalecoop.ug', 'Kabale, Western Region', 'buying@kabalecoop.ug', '256726789012', '2024-01-06'),
+('Soroti Market Hub', 'purchasing@sorotimarket.ug', 'Soroti, Eastern Region', 'purchasing@sorotimarket.ug', '256727890123', '2024-01-07'),
+('Arua Fresh Traders', 'orders@aruafresh.ug', 'Arua, Northern Region', 'orders@aruafresh.ug', '256728901234', '2024-01-08'),
+('Hoima Co-op Ltd.', 'buying@hoimacoop.ug', 'Hoima, Western Region', 'buying@hoimacoop.ug', '256729012345', '2024-01-09'),
+('Entebbe Exports', 'sales@entebbeexports.ug', 'Entebbe, Central Region', 'sales@entebbeexports.ug', '256720123456', '2024-01-10');
+
+-- Insert Products with categories
+INSERT INTO Products (Name, Quantity, HarvestDate, ExpiryDate, PricePerKg, FarmerID, SupplierID, CategoryID, QualityRating, Certification) VALUES
+('Matoke (Bananas)', 1000, '2025-02-10', '2025-05-10', 1.50, 1, 1, 1, 'Excellent', 'Organic'),
+('Robusta Coffee', 600, '2025-01-01', '2025-07-01', 4.00, 2, 2, 5, 'Good', 'Fair Trade'),
+('Maize', 800, '2025-02-15', '2025-05-15', 0.80, 3, 3, 2, 'Good', NULL),
+('Fresh Vegetables', 500, '2025-03-01', '2025-04-01', 2.00, 4, 4, 3, 'Excellent', 'Organic'),
+('Sweet Potatoes', 600, '2025-02-20', '2025-05-20', 1.20, 5, 5, 3, 'Good', NULL),
+('Beans', 400, '2025-02-25', '2025-05-25', 2.50, 6, 6, 4, 'Fair', NULL),
+('Millet', 500, '2025-01-05', '2025-04-05', 1.00, 7, 7, 2, 'Good', NULL),
+('Groundnuts', 300, '2025-02-15', '2025-05-15', 3.00, 8, 8, 4, 'Good', 'Local Certified'),
+('Pineapples', 700, '2025-03-01', '2025-04-15', 2.00, 9, 9, 1, 'Excellent', 'Organic'),
+('Soya Beans', 450, '2025-02-15', '2025-06-15', 1.80, 10, 10, 4, 'Good', NULL);
+
+-- Insert Orders with payment methods
+INSERT INTO Orders (ProductID, BuyerID, PaymentMethodID, Quantity, OrderDate, Status, PaymentStatus) VALUES
+(1, 1, 1, 200, '2025-03-05', 'Shipped', 'Paid'),
+(2, 3, 2, 150, '2025-03-10', 'Pending', 'Pending'),
+(3, 2, 3, 300, '2025-03-07', 'Delivered', 'Paid'),
+(4, 4, 1, 100, '2025-03-11', 'Shipped', 'Pending'),
+(5, 5, 4, 100, '2025-03-12', 'Shipped', 'Pending'),
+(6, 6, 5, 80, '2025-03-15', 'Pending', 'Pending'),
+(7, 7, 1, 120, '2025-03-18', 'Delivered', 'Paid'),
+(8, 8, 2, 50, '2025-03-20', 'Shipped', 'Pending'),
+(9, 9, 3, 150, '2025-03-22', 'Pending', 'Pending'),
+(10, 10, 4, 90, '2025-03-25', 'Delivered', 'Paid');
+
+-- Insert Transportation with driver contacts
+INSERT INTO Transportation (OrderID, VehicleType, DriverName, DriverContact, ExpectedDelivery, ActualDelivery, Status) VALUES
+(1, 'Pickup Truck', 'Joseph Ssebugwawo', '256731234567', '2025-03-10', '2025-03-10', 'Delivered'),
+(2, 'Container Truck', 'Aisha Nakato', '256732345678', '2025-03-16', NULL, 'In Transit'),
+(3, 'Lorry', 'Tom Wilson', '256733456789', '2025-03-15', '2025-03-15', 'Delivered'),
+(4, 'Van', 'Emma Davis', '256734567890', '2025-03-18', NULL, 'In Transit'),
+(5, 'Pickup Truck', 'Pauline Atim', '256735678901', '2025-03-20', '2025-03-20', 'Delivered'),
+(6, 'Lorry', 'Richard Odoi', '256736789012', '2025-03-25', NULL, 'In Transit'),
+(7, 'Van', 'Margaret Namirembe', '256737890123', '2025-03-25', '2025-03-25', 'Delivered'),
+(8, 'Container Truck', 'Charles Okello', '256738901234', '2025-03-28', NULL, 'In Transit'),
+(9, 'Refrigerated Truck', 'Susan Nambi', '256739012345', '2025-03-28', '2025-03-28', 'Delivered'),
+(10, 'Pickup Truck', 'George Wabwire', '256730123456', '2025-04-01', NULL, 'In Transit');
+
+DELIMITER ; 
