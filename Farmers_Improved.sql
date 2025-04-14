@@ -310,13 +310,13 @@ BEGIN
             WHEN 'Rainy' THEN 4 AND 6
             WHEN 'Harvest' THEN 7 AND 9
             WHEN 'Planting' THEN 10 AND 12
-        END;
-END //
+        END
+END//
 
 -- Adjust Seasonal Prices
 CREATE PROCEDURE AdjustSeasonalPrices(IN season VARCHAR(20), IN adjustment_factor DECIMAL(3,2))
 BEGIN
-    START TRANSACTION;
+    START TRANSACTION
     UPDATE Products p
     SET p.PricePerKg = p.PricePerKg * adjustment_factor
     WHERE MONTH(p.HarvestDate) BETWEEN 
@@ -325,9 +325,9 @@ BEGIN
             WHEN 'Rainy' THEN 4 AND 6
             WHEN 'Harvest' THEN 7 AND 9
             WHEN 'Planting' THEN 10 AND 12
-        END;
-    COMMIT;
-END //
+        END
+    COMMIT
+END//
 
 -- Process Bulk Order
 CREATE PROCEDURE ProcessBulkOrder(
@@ -337,34 +337,34 @@ CREATE PROCEDURE ProcessBulkOrder(
     IN payment_method_id INT
 )
 BEGIN
-    DECLARE i INT DEFAULT 0;
-    DECLARE product_count INT;
-    DECLARE current_product_id INT;
-    DECLARE current_quantity INT;
+    DECLARE i INT DEFAULT 0
+    DECLARE product_count INT
+    DECLARE current_product_id INT
+    DECLARE current_quantity INT
     
-    SET product_count = JSON_LENGTH(product_ids);
+    SET product_count = JSON_LENGTH(product_ids)
     
-    START TRANSACTION;
+    START TRANSACTION
     
     WHILE i < product_count DO
-        SET current_product_id = JSON_EXTRACT(product_ids, CONCAT('$[', i, ']'));
-        SET current_quantity = JSON_EXTRACT(quantities, CONCAT('$[', i, ']'));
+        SET current_product_id = JSON_EXTRACT(product_ids, CONCAT('$[', i, ']'))
+        SET current_quantity = JSON_EXTRACT(quantities, CONCAT('$[', i, ']'))
         
         INSERT INTO Orders (ProductID, BuyerID, PaymentMethodID, Quantity, OrderDate)
-        VALUES (current_product_id, buyer_id, payment_method_id, current_quantity, CURDATE());
+        VALUES (current_product_id, buyer_id, payment_method_id, current_quantity, CURDATE())
         
-        SET i = i + 1;
-    END WHILE;
+        SET i = i + 1
+    END WHILE
     
-    COMMIT;
-END //
+    COMMIT
+END//
 
 -- Generate Backup Script
 CREATE PROCEDURE GenerateBackupScript()
 BEGIN
     SELECT CONCAT('mysqldump -u [username] -p AgricultureSupplyChain > /backups/agriculture_backup_', 
-           DATE_FORMAT(NOW(), '%Y%m%d_%H%i%s'), '.sql') AS BackupCommand;
-END //
+           DATE_FORMAT(NOW(), '%Y%m%d_%H%i%s'), '.sql') AS BackupCommand
+END//
 
 DELIMITER ;
 
