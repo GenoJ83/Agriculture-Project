@@ -209,7 +209,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Expiry date cannot be before harvest date';
     END IF;
-END //
+END//
 
 -- Order Validation
 CREATE TRIGGER validate_order
@@ -225,7 +225,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Order quantity exceeds available product quantity';
     END IF;
-END //
+END//
 
 -- Price Update Validation
 CREATE TRIGGER validate_price_update
@@ -236,7 +236,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Price per kg cannot be less than 0.1';
     END IF;
-END //
+END//
 
 -- Quantity Update Validation
 CREATE TRIGGER validate_quantity_update
@@ -247,7 +247,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Product quantity cannot be negative';
     END IF;
-END //
+END//
 
 -- Audit Logging
 CREATE TRIGGER audit_product_changes
@@ -258,7 +258,7 @@ BEGIN
     VALUES ('Products', 'UPDATE', CURRENT_USER(),
             JSON_OBJECT('ProductID', OLD.ProductID, 'Price', OLD.PricePerKg, 'Quantity', OLD.Quantity),
             JSON_OBJECT('ProductID', NEW.ProductID, 'Price', NEW.PricePerKg, 'Quantity', NEW.Quantity));
-END //
+END//
 
 -- Failed Login Tracking
 CREATE TRIGGER track_failed_login
@@ -269,7 +269,7 @@ BEGIN
         INSERT INTO AuditLog (TableName, Action, User)
         VALUES ('UserLogins', 'Failed Login', CONCAT(NEW.UserType, ' ID: ', NEW.UserID));
     END IF;
-END //
+END//
 
 -- Order Date Validation
 CREATE TRIGGER validate_order_date
@@ -280,7 +280,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Order date cannot be in the future';
     END IF;
-END //
+END//
 
 CREATE TRIGGER validate_order_date_update
 BEFORE UPDATE ON Orders
@@ -290,7 +290,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Order date cannot be in the future';
     END IF;
-END //
+END//
 
 DELIMITER ;
 
