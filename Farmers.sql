@@ -197,10 +197,10 @@ GRANT buyer_role TO 'buyer'@'localhost';
 GRANT admin_role TO 'admin'@'localhost';
 
 -- Set Default Roles
-SET DEFAULT ROLE farmer_role FOR 'farmer'@'localhost';
-SET DEFAULT ROLE supplier_role FOR 'supplier'@'localhost';
-SET DEFAULT ROLE buyer_role FOR 'buyer'@'localhost';
-SET DEFAULT ROLE admin_role FOR 'admin'@'localhost';
+SET DEFAULT ROLE farmer_role TO 'farmer'@'localhost';
+SET DEFAULT ROLE supplier_role TO 'supplier'@'localhost';
+SET DEFAULT ROLE buyer_role TO 'buyer'@'localhost';
+SET DEFAULT ROLE admin_role TO 'admin'@'localhost';
 
 -- Create Enhanced Triggers
 DELIMITER //
