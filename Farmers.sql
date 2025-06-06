@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     CONSTRAINT chk_valid_order_date CHECK (OrderDate <= CURDATE())
 );
 
--- Create Transportation Table with Enhanced Constraints
+-- Creating Transportation Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Transportation (
     TransportID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT,
