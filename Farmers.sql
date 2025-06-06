@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS Products (
     CONSTRAINT chk_valid_dates CHECK (ExpiryDate >= HarvestDate)
 );
 
--- Create Orders Table with Enhanced Constraints
+-- Creating Orders Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Orders (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
     ProductID INT,
