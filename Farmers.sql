@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS Suppliers (
     CONSTRAINT chk_supplier_valid_location CHECK (Location != '')
 );
 
--- Create Buyers Table with Enhanced Constraints
+-- Creating Buyers Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Buyers (
     BuyerID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE,
