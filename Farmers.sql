@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS Buyers (
     CONSTRAINT chk_buyer_valid_location CHECK (Location != '')
 );
 
--- Create Products Table with Enhanced Constraints
+-- Creating Products Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Products (
     ProductID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE,
