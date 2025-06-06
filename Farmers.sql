@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Farmers (
     CONSTRAINT chk_farmer_valid_location CHECK (Location != '')
 );
 
--- Create Suppliers Table with Enhanced Constraints
+-- Creating Suppliers Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Suppliers (
     SupplierID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL UNIQUE,
