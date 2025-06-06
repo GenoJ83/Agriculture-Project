@@ -3,7 +3,8 @@ DROP DATABASE IF EXISTS AgricultureSupplyChain;
 CREATE DATABASE AgricultureSupplyChain;
 USE AgricultureSupplyChain;
 
--- Create ProductCategories Table (First, no dependencies)
+-- Creating 
+ProductCategories Table (First, no dependencies)
 CREATE TABLE IF NOT EXISTS ProductCategories (
     CategoryID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(50) NOT NULL UNIQUE,
