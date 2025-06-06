@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS UserLogins (
     CONSTRAINT chk_valid_ip CHECK (IPAddress REGEXP '^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$')
 );
 
--- Create Farmers Table with Enhanced Constraints
+-- Creating Farmers Table with Enhanced Constraints
 CREATE TABLE IF NOT EXISTS Farmers (
     FarmerID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL,
