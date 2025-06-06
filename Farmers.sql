@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS AuditLog (
     CONSTRAINT chk_valid_ip CHECK (IPAddress REGEXP '^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$')
 );
 
--- Create Indexes for Performance
+-- Creating Indexes for Performance
 CREATE INDEX idx_products_farmer ON Products(FarmerID);
 CREATE INDEX idx_products_supplier ON Products(SupplierID);
 CREATE INDEX idx_products_category ON Products(CategoryID);
