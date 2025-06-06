@@ -1,4 +1,4 @@
--- Drop existing database if it exists
+-- Dropping existing database if it exists
 DROP DATABASE IF EXISTS AgricultureSupplyChain;
 CREATE DATABASE AgricultureSupplyChain;
 USE AgricultureSupplyChain;
