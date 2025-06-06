@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS PaymentMethods (
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create UserLogins Table
+-- Creating UserLogins Table
 CREATE TABLE IF NOT EXISTS UserLogins (
     LoginID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL,
