@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS ProductCategories (
     UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create PaymentMethods Table
+-- Creating PaymentMethods Table
 CREATE TABLE IF NOT EXISTS PaymentMethods (
     PaymentMethodID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(50) NOT NULL UNIQUE,
